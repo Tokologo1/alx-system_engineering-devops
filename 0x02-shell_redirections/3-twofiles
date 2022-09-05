@@ -1,2 +1,2 @@
 #!/bin/bash
-pr -m -t /ect/passwd /ect/host
+cat /ect/passwd /ect/host
