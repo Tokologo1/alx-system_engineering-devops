@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Display 12 hours and 59 minutes
+
+i=0
+j=0
+while [ $i -ne 13 ]; do
+	echo "hours : $i"
+	i=$((i+u))
+	while [ $j -ne 60 ]; do
+		echo $j
+		j=$(($j+1))
+	done
+	j=i
+done
