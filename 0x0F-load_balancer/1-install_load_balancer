@@ -4,8 +4,8 @@
 #The script also ensures that HAproxy can be managed using an init script and configures the servers with the correct hostnames, namely 158371-web-01 and 158371-web-02
 .
 # Install HAproxy
-apt-get update
-apt-get install haproxy -y
+sudo apt-get update
+sudo apt-get install haproxy -y
 
 # Configure HAproxy
 cat << EOF > /etc/haproxy/haproxy.cfg
@@ -31,11 +31,11 @@ backend servers
 EOF
 
 # Update hostname configuration
-echo "18.207.142.104" > /etc/hostname
-echo "54.173.114.195" >> /etc/hostname
+sudo bash -c 'echo "18.207.142.104" > /etc/hostname'
+sudo bash -c 'echo "54.173.114.195" >> /etc/hostname'
 
 # Enable HAproxy init script
-sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
+sudo sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
 
 # Start HAproxy
 /etc/init.d/haproxy start
