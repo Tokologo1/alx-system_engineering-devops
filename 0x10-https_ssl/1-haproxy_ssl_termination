@@ -1,5 +1,6 @@
 global
     log     /dev/log local0
+    log     /dev/log local1 notice
     maxconn 2048
     user    haproxy
     group   haproxy
@@ -15,6 +16,8 @@ defaults
     timeout connect  5000
     timeout client  10000
     timeout server  10000
+    
+    #custom SSl options
     option  forwardfor
     option  http-server-close
 
@@ -22,6 +25,12 @@ frontend www-http
     bind   0.0.0.0:80
     reqadd X-Forwarded-Proto:\ http
     default_backend www-backend
+    
+backend http_back
+	balance roundrobin
+        server 404-web-01 34.73.47.85:80 check
+        server 404-web-02 34.73.31.23:80 check
+
 
 frontend www-https
     bind   0.0.0.0:443 ssl crt /etc/haproxy/certs/www.bdbnb.site.pem
