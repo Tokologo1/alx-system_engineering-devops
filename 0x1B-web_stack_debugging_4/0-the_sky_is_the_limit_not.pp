@@ -1,6 +1,12 @@
-#Correct the amount of failed request.
+# Fix problem of high amount of requests
 
-exec { 'fix--for-nginx':
-  command => "sed -i 's/worker_processess 4;/worker_processess 7;/g' /ect/nginx/nginx.conf; sudo service nginx restart",
-  path    => ['/bin', '/usr/bin', '/usr/sbin']
-}  
+exec {'replace':
+  provider => shell,
+  command  => 'sudo sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/" /etc/default/nginx',
+  before   => Exec['restart'],
+}
+
+exec {'restart':
+  provider => shell,
+  command  => 'sudo service nginx restart',
+}
